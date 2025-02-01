@@ -1,5 +1,7 @@
 // import { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
+// import ProductList from "../expense-tracker/components/ProductList";
+// import { useState } from "react";
 // import ExpandableText from "./components/ExpandableText";
 // import NavBar from "./components/NavBar";
 // import Cart from "./components/Cart";
@@ -10,7 +12,7 @@ import axios from "axios";
 // import Button from './components/Button/Button';
 // import ListGroup from './components/ListGroup'
 
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 
 // import ExpenseForm from "../expense-tracker/components/ExpenseForm";
 // import ExpenseFilter from "../expense-tracker/components/ExpenseFilter";
@@ -26,17 +28,17 @@ import { useEffect, useState } from "react";
 
 // import ExerciseShowingAlert from "./components/ExerciseShowingAlert";
 // import categories from "../expense-tracker/categories";
-const connect=()=>console.log('Connecting');
-const disconnect=()=>console.log('Disconnecting');
+// const connect=()=>console.log('Connecting');
+// const disconnect=()=>console.log('Disconnecting');
 
 
 
-function App() {
+// function App() {
 
-  useEffect(()=>{
-    connect();
-    return ()=>disconnect();
-  })
+  // useEffect(()=>{
+    // connect();
+    // return ()=>disconnect();
+  // })
 
 
   // const [selectedCategory, setSelectedCategory] = useState("");
@@ -163,8 +165,15 @@ function App() {
   //       setUsers(originalUsers);
   //     });
   // };
-  return (
-    <>
+//  const[category,setCategory]= useState('');
+//   return (
+//     <>
+//     <select className="form-select" onChange={(event)=>setCategory(event.target.value)}>
+//     <option value=""></option>
+//     <option value="Clothing">Clothing</option>
+//     <option value="Household">Household</option>
+//     </select>
+//     <ProductList category={category}/>
       {/* <Form1/> */}
       {/* <div className="mb-5"> */}
       {/* <ExpenseForm onSubmit={data=>console.log(data)}/> */}
@@ -241,8 +250,37 @@ function App() {
           </li>
         ))}
       </ul> */}
-    </>
+    // </>
+  // );
+// }
+
+// Handling Errors
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+
+const App = () => {
+  const [users, setUsers] = useState<User[]>([]);
+ const[error, setError]= useState("");
+
+  useEffect(()=>{
+    axios
+    .get<User[]>("https://jsonplaceholder.typicode.com/xusers") 
+     .then((res) =>  setUsers(res.data))
+     .catch(err=>setError(err.message));
+     
+    },[]);
+  return (
+    <>
+    {error &&<p className="danger">{error}</p>}
+  <ul>
+    {users.map((user)=>(
+      <li key={user.id}>{user.name}</li>
+    ))}
+  </ul>
+  </>
   );
-}
+};
 
 export default App;
+
+
